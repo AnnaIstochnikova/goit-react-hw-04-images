@@ -9,7 +9,6 @@ import { fetchData } from '../services/API-search/APISearch';
 
 const Finder = () => {
   const [data, setData] = useState([]);
-  const [totalHits, setTotalHits] = useState(0);
   const [showList, setShowList] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [showSpinner, setShowSpinner] = useState(false);
@@ -18,6 +17,9 @@ const Finder = () => {
 
   const getWordFromInput = event => {
     event.preventDefault();
+
+    setCurrentPage(1);
+    setData([]);
 
     const form = event.currentTarget;
     const searchWord = form.elements.input.value;
@@ -30,52 +32,44 @@ const Finder = () => {
 
   useEffect(() => {
     if (requestedWord !== '') {
+      setShowSpinner(true);
       const renderData = async () => {
         try {
-          const data = await fetchData(requestedWord, currentPage);
-          if (data.hits.length > 0) {
-            setShowSpinner(false);
+          const fetchDataInfo = await fetchData(requestedWord, currentPage);
+          if (fetchDataInfo.hits.length > 0) {
+            setShowSpinner(true);
             setShowList(true);
-            setData(data.hits);
-            setTotalHits(data.totalHits);
+            if (currentPage > 1) {
+              setData(d => [...d, ...fetchDataInfo.hits]);
+            } else {
+              setData([...fetchDataInfo.hits]);
+            }
           }
-          if (data.totalHits > 12) {
+          if (fetchDataInfo.totalHits > 12) {
             setShowBtnLoadMore(true);
           }
         } catch (error) {
           console.log(error.message);
+        } finally {
+          setShowSpinner(false);
         }
       };
       renderData();
     }
-  }, [requestedWord, currentPage]);
+  }, [currentPage, requestedWord]);
 
   useEffect(() => {
     if (currentPage > 1) {
+      console.log('page +1');
       window.scrollTo({
         top: document.body.scrollHeight,
         behavior: 'smooth',
       });
     }
-  }, [currentPage]);
+  }, [currentPage, showSpinner]);
 
   const loadMoreContent = async () => {
-    setShowSpinner(true);
-    try {
-      const data = await fetchData(requestedWord, currentPage + 1);
-      if (data.hits.length > 0) {
-        setCurrentPage(prev => prev + 1);
-        setData(prev => [...prev, ...data.hits]);
-        setTotalHits(data.totalHits);
-        setShowSpinner(false);
-      }
-
-      if (totalHits / 12 - 1 <= currentPage) {
-        setShowBtnLoadMore(false);
-      }
-    } catch (error) {
-      console.log(error.message);
-    }
+    setCurrentPage(currentPage + 1);
   };
 
   return (
