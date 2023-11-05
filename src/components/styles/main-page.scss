@@ -1,0 +1,66 @@
+ul {
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding-top: 30px;
+  justify-content: center;
+  padding-bottom: 30px;
+  & > li > img {
+    width: 400px;
+    height: 270px;
+  }
+}
+
+header {
+  margin-bottom: 30px;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  height: 70px;
+  background-color: #149eca;
+  & > form > button {
+    position: relative;
+    left: 29px;
+    top: 5px;
+    background-color: transparent;
+    border: none;
+    & > svg {
+      width: 20px;
+    }
+  }
+}
+
+input {
+  font-family: 'Montserrat', sans-serif;
+  border-radius: 5px;
+  height: 30px;
+  border: none;
+  padding-left: 25px;
+  width: 300px;
+}
+
+.button--load-more {
+  height: 35px;
+  margin: 15px;
+  color: white;
+  background-color: #23272f;
+  width: 160px;
+  border-color: white;
+  border-radius: 15px;
+  border-style: double;
+  border-width: 0.5px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 20px;
+  &:hover {
+    cursor: pointer;
+    background-color: #149eca;
+  }
+}
+
+.button > img {
+  width: 20px;
+}
