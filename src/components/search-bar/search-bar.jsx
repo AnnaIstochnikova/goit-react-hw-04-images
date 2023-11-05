@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 import { SubmitBtn } from 'components/submit-btn/submit-btn';
 
-export const Searchbar = ({ fnOnFormSubmit }) => {
+export const SearchBar = ({ fnOnFormSubmit }) => {
   const handleSubmit = event => {
     fnOnFormSubmit(event);
   };
@@ -23,6 +23,6 @@ export const Searchbar = ({ fnOnFormSubmit }) => {
   );
 };
 
-Searchbar.propTypes = {
+SearchBar.propTypes = {
   fnOnFormSubmit: PropTypes.func,
 };

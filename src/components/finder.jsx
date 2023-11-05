@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { React, useState, useEffect } from 'react';
 import { Watch } from 'react-loader-spinner';
 
-import { Searchbar } from './search-bar/search-bar';
+import { SearchBar } from './search-bar/search-bar';
 import { LoadMoreBtn } from './load-more-btn/load-more-btn';
 import { ImageGallery } from './image-gallery/image-gallery';
 import { fetchData } from '../services/API-search/APISearch';
@@ -39,11 +39,7 @@ const Finder = () => {
           if (fetchDataInfo.hits.length > 0) {
             setShowSpinner(true);
             setShowList(true);
-            if (currentPage > 1) {
-              setData(d => [...d, ...fetchDataInfo.hits]);
-            } else {
-              setData([...fetchDataInfo.hits]);
-            }
+            setData(d => [...d, ...fetchDataInfo.hits]);
           }
           if (fetchDataInfo.totalHits > 12) {
             setShowBtnLoadMore(true);
@@ -60,7 +56,6 @@ const Finder = () => {
 
   useEffect(() => {
     if (currentPage > 1) {
-      console.log('page +1');
       window.scrollTo({
         top: document.body.scrollHeight,
         behavior: 'smooth',
@@ -74,7 +69,7 @@ const Finder = () => {
 
   return (
     <>
-      <Searchbar fnOnFormSubmit={getWordFromInput} />
+      <SearchBar fnOnFormSubmit={getWordFromInput} />
       {showList && <ImageGallery data={data} />}
       {showSpinner && (
         <Watch
