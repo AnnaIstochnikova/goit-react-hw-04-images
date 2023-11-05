@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-export let requestedWord = '';
-export let currentPage = 1;
+// export let requestedWord = '';
+// export let currentPage = 1;
 
 export const fetchData = async (requestedWord, currentPage) => {
   const response = await axios.get(
